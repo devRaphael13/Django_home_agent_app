@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <style>
+    :root {
+      --slate-900: #0f172a;
+      --slate-400: #94a3b8;
+      --indigo-600: #4f46e5;
+
+    }
+
+    input[type=text],
+    input[type=password],
+    input[type=email],
+    input[type=url],
+    input[type=number],
+    input[type=tel],
+    textarea,
+    select,
+    .VtextField {
+      color: var(--slate-400);
+      background-color: var(--slate-900);
+    }
+
+    .rotate {
+      transform: rotate(270deg);
+    }
+    
+    @media only screen and (min-width: 768px) {
+      .rotate {
+        transform: rotate(180deg);
+      }
+    }
+  </style>
+  {% block morestyle %}
+  {% endblock %}
+  <title>Agency</title>
+</head>
+
+<body class="bg-slate-900 text-slate-300 font-sans">
+  <nav class="bg-slate-800 py-3 md:px-12 px-2">
+    <div id="menu" class="relative">
+      <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"
+        class="absolute ml-8 sm:hidden w-4 h-4 text-indigo-800">
+        <path
+          d="M 5 8 A 2.0002 2.0002 0 1 0 5 12 L 45 12 A 2.0002 2.0002 0 1 0 45 8 L 5 8 z M 5 23 A 2.0002 2.0002 0 1 0 5 27 L 45 27 A 2.0002 2.0002 0 1 0 45 23 L 5 23 z M 5 38 A 2.0002 2.0002 0 1 0 5 42 L 45 42 A 2.0002 2.0002 0 1 0 45 38 L 5 38 z" />
+      </svg>
+    </div>
+    <div class="md:flex md:flex-row flex-col md:justify-between">
+      <div class="text-center">
+        <a href="{% url 'home' %}" class="text-indigo-600 font-semibold sm:text-2xl font-serif">
+            Homes
+        </a>
+      </div>
+      <div class="flex justify-between w-full md:ml-6">
+        <div class="flex items-center md:gap-x-2 gap-x-1">
+          <a class="text-slate-400 md:text-base text-sm leading-tight md:leading-normal font-medium hover:text-indigo-600"
+            href="{% url 'properties' %}">Properties</a>
+          <a class="text-slate-400 md:text-base text-sm leading-tight md:leading-normal font-medium hover:text-indigo-600"
+            href="{% url 'agents' %}">Our Agents</a>
+          <a class="text-slate-400 md:text-base text-sm leading-tight md:leading-normal font-medium hover:text-indigo-600"
+            href="{% url 'contact-us' %}">Contact Us</a>
+        </div>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'agent-detail' request.user.id %}" class="sm:ml-0 ml-1 text-indigo-600 break-all italic sm:text-base text-xs">
+          {{ request.user.email }}</a>
+        {% else %}
+        <div class="flex gap-x-1 md:gap-x-2 items-center">
+          <a href="{% url 'login' %}" class="md:text-base text-xs font-semibold hover:text-indigo-600">Sign-in</a>
+          <div
+            class="bg-indigo-600 text-slate-900 md:text-base text-xs font-semibold border-2 border-indigo-600 hover:text-indigo-600 hover:bg-slate-900 rounded-md md:px-3 px-2 py-1">
+            <a href="{% url 'signup' %}" class="">Sign-up</a>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </nav>
+  {% block content %} {% endblock %} {% include 'core/footer.html' %}
+  <script>
+    let menu = document.getElementById("menu");
+    let filter = document.getElementById("filter");
+
+    function showFilter () {
+      if (filter) {
+        if (menu.style.display != "none") {
+          menu.addEventListener("click", (e) => {
+            let display = filter.style.display;
+            if (display == "block") {
+              filter.style.display = "none"
+            } else {
+              filter.style.display = "block"
+            }
+          })
+        } else {
+          filter.style.display = "block"
+        }
+      } else {
+        menu.style.display = "none"
+      }
+    }
+
+    showFilter()
+  </script>
+  {% block js %} {% endblock %}
+</body>
+
+</html>

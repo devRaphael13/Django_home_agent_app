@@ -1,0 +1,92 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+{% block extrahead %}
+    <style>
+        :root {
+            --slate-800: #1e293b;
+            --slate-900: #0f172a;
+            --slate-400: #94a3b8;
+            --indigo-600: #4f46e5;
+            --indigo-800: #3730a3;
+            --red-500: #ef4444;
+
+            --primary: var(--slate-800);
+            --accent: var(--indigo-600);
+            --secondary: var(--slate-900);
+            --primary-fg: var(--slate-400);
+
+            /* Header */
+            --header-color: var(--slate-400);
+            --header-branding-color: var(--accent);
+            --header-bg: var(--secondary);
+
+            /* Body */
+            --body-fg: var(--slate-400);
+            --body-bg: var(--slate-900);
+            --body-quiet-color: var(--slate-400);
+            --darkened-bg: var(--slate-800);
+            
+            /* Links */
+            --link-fg: var(--indigo-600);
+
+            
+            /* Hairline */
+            --hairline-color: var(--slate-800);
+            --border-color: var(--slate-800);
+            
+            /* Errors */
+            --error-fg: var(--red-500);
+            
+            /* Miscellaneous */
+            --selected-bg: var(--slate-800);
+            --selected-row: var(--slate-800);
+
+            /* Buttons  */
+            --button-fg: var(--slate-900);
+            --button-bg: var(--indigo-600);
+            --default-button-bg: var(--indigo-600);
+            --default-button-hover-bg: var(--indigo-800);
+
+            /* Breadcrumbs */
+            --breadcrumbs-fg: var(--indigo-600);
+            --breadcrumbs-link-fg: var(--slate-400);
+            --breadcrumbs-bg: var(--primary);
+
+        }
+
+        input[type=text], input[type=password], 
+        input[type=email], input[type=url], 
+        input[type=number], input[type=tel],
+        textarea, select, .VtextField {
+            color: var(--slate-400);
+            background-color: var(--slate-900);
+            margin-top: 0.25rem;
+            outline: 2px solid transparent;
+            outline-offset: 2
+        }
+
+        input[type=text]:focus, input[type=password]:focus, 
+        input[type=email]:focus, input[type=url]:focus, 
+        input[type=number]:focus, input[type=tel]:focus,
+        textarea:focus, select:focus, .VtextField:focus {
+            border-width: 2px;
+            border-color: var(--indigo-600);
+        }
+
+        #changelist-filter {
+            background-color: var(--slate-900);
+        }
+
+        thead th {
+            background: var(--slate-800);
+        }
+    </style>
+{% endblock %}
+focus:border-2 focus:border-indigo-600
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

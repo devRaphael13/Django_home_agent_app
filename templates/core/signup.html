@@ -1,0 +1,80 @@
+{% extends "core/base.html" %}
+{% block content %}
+<section class="py-12 px-32 my-12 mx-48 rounded-md bg-slate-800">
+    <h1 class="sm:text-3xl text-2xl title-font mb-8 text-indigo-600 text-xl font-medium leading-tight tracking-tight">
+        Sign Up</h1>
+    <form action="." method="POST">
+        {% csrf_token %}
+        <div class="mb-2">
+            <label class="block mb-2 font-medium text-slate-400" for="id_email">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+            {% for error in form.email.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="grid grid-cols-2 gap-x-2 mb-2">
+            <div class="">
+                <label class="block mb-2 font-medium text-slate-400" for="id_first_name">First name</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                {% for error in form.first_name.errors %}
+                <p class="text-red-500 text-sm">{{ error }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="">
+                <label class="block mb-2 font-medium text-slate-400" for="id_last_name">Last name</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                {% for error in form.last_name.errors %}
+                <p class="text-red-500 text-sm">{{ error }}</p>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <label class="block mb-2 font-medium text-slate-400" for="id_photo">Photo</label>
+            <input type="file" name="photo" id="id_photo">
+        </div>
+        <div class="mb-2">
+
+            <label class="block mb-2 font-medium text-slate-400" for="id_phone_number">Phone number</label>
+            {{ form.phone_number }}
+            {% if form.phone_number.errors %}
+            {% for error in form.phone_number.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="mb-2">
+            <label class="block mb-2 font-medium text-slate-400" for="id_password1">Password</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+            {% for error in form.password1.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <div class="mb-2">
+            <label class="block mb-2 font-medium text-slate-400" for="id_password2">Password confirmation</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+            {% for error in form.password2.errors %}
+            <p class="text-red-500 text-sm">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <input
+            class="bg-indigo-600 text-slate-900 rounded-md w-full mt-4 py-2 font-semibold border-2 border-indigo-600 hover:text-indigo-600 hover:bg-transparent"
+            type="submit" value="Sign-up">
+    </form>
+    <p class="mt-8 text-sm font-light text-slate-400">
+        Do you have an account yet? <a href="{% url 'login' %}" class="font-medium text-slate-400 hover:underline">Log in</a>
+    </p>
+</section>
+
+{% endblock %}

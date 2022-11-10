@@ -1,0 +1,184 @@
+{% extends "admin/change_form.html" %} {% load static %} {% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+{% endblock %} {% block content_title %}
+  <h1 class="mb-4 lg:ml-8 text-xl font-medium leading-tight tracking-tight md:text-2xl">
+    Update User
+  </h1>
+
+{% endblock %} {% block content_subtitle %}
+<div class="flex justify-between">
+  <h2 class="text-slate-400 mb-2 lg:ml-8 leading-tight tracking-tight md:text-lg">
+  {{ form.instance|title }}
+</h2>
+
+<a class="mr-8 underline" href="#">History</a>
+</div>
+
+{% endblock %} {% block content %}
+<section class="lg:mx-8">
+  <form action="." method="post" enctype="multipart/form-data">
+    {% if errors %}
+    <p class="errornote mb-2 text-red-500">Please correct the error(s) below</p>
+    {% endif %}
+
+    {% csrf_token %}
+
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_password">Password</label>
+      {{ form.password }}
+    </div>
+
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_email">Email</label>
+      {{ form.email }}
+      {% if adminform.errors.email %}
+      {% for error in adminform.errors.email %}
+      <p class="text-red-500 text-sm mt-2">{{ error }}</p>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <div class="grid sm:grid-cols-2 sm:gap-x-2">
+      <div class="mb-4">
+        <label class="text-slate-400" for="id_first_name">First Name</label>
+        {{ form.first_name }}
+        {% if adminform.errors.first_name %}
+        {% for error in adminform.errors.first_name %}
+        <p class="text-red-500 text-sm mt-2">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="mb-4">
+        <label class="text-slate-400" for="id_last_name">Last Name</label>
+        {{ form.last_name }}
+        {% if adminform.errors.last_name %}
+        {% for error in adminform.errors.last_name %}
+        <p class="text-red-500 text-sm mt-2">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <label class="text-slate-400" class="block" for="id_photo">Profile Photo</label>
+      <input type="file" name="photo" id="id_photo" />
+
+      {% if form.instance.photo_url %}
+      <div id="photo_div" class="mt-2">
+        <a class="text-indigo-600 underline mr-4" href="{{ form.instance.photo_url }}">View Profile Pic</a>
+        <span id="remove_photo" data-agent-id="{{ form.instance.id }}"
+          class="text-red-500 underline cursor-pointer">Remove</span>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_phone_number">Phone Number</label>
+      {{ form.phone_number }}
+      {% if adminform.errors.phone_number %}
+      {% for error in adminform.errors.phone_number %}
+      <p class="text-red-500 text-sm mt-2">{{ error }}</p>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_twitter">Twitter (optional)</label>
+      {{ form.twitter }}
+      {% if adminform.errors.twitter %}
+      {% for error in adminform.errors.twitter %}
+      <p class="text-red-500 text-sm mt-2">{{ error }}</p>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_instagram">Instagram (optional)</label>
+      {{ form.instagram }}
+      {% if adminform.errors.instagram %}
+      {% for error in adminform.errors.instagram %}
+      <p class="text-red-500 text-sm mt-2">{{ error }}</p>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_facebook">Facebook (optional)</label>
+      {{ form.facebook }}
+      {% if adminform.errors.facebook %}
+      {% for error in adminform.errors.facebook %}
+      <p class="text-red-500 text-sm mt-2">{{ error }}</p>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+
+    <!-- permissions -->
+    <h2 class="block bg-slate-800 w-full mt-8 mb-2 p-2 text-indigo-600 font-medium">
+      Permissions
+    </h2>
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_facebook">Staff status</label>
+      {{ form.is_staff }}
+      <span class="text-sm text-slate-400 font-light block">
+        This designates if the user can login into the admin site
+      </span>
+    </div>
+
+    <div class="mb-4">
+      <label class="text-slate-400" for="id_facebook">Active status</label>
+      {{ form.is_active }}
+      <span class="text-sm text-slate-400 font-light block">
+        This designates if the user can login, deactivate user instead of deleting
+      </span>
+    </div>
+    <div class="submit-row">
+      <input type="submit" value="Save" class="default" name="_save" />
+    </div>
+  </form>
+</section>
+
+{% endblock %} {% block js %}
+<script>
+  const remove = document.getElementById("remove_photo");
+  const csrftoken = getCookie("csrftoken");
+
+  function getCookie (name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  remove.addEventListener("click", (e) => {
+    const data = { agent_id: e.target.dataset.agentId };
+    fetch("{% url 'delete-photo' %}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.delete) {
+          const photo_div = document.getElementById("photo_div");
+          photo_div.remove();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,347 @@
+{% extends "core/base.html" %} {% load static %} {% block content %}
+<main>
+  <!-- hero -->
+  <section
+    class="sm:h-[75vh] h-[50vh] bg-slate-800 sm:pl-12 pl-4 flex lg:mb-32 sm:mb-24 mb-12"
+  >
+    <div class="flex flex-col mt-4 sm:mt-0 justify-center w-1/2">
+      <h1
+        class="font-black text-white lg:text-5xl sm:text-3xl text-2xl leading-tight sm:leading-normal lg:mb-6 mb-2"
+      >
+        Home changes everything<span
+          class="sm:text-3xl text-xl leading-tight sm:leading-normal lg:text-5xl text-indigo-600"
+          >.</span
+        >
+      </h1>
+      <p
+        class="lg:mb-6 mb-2 sm:leading-tight leading-normal text-sm lg:text-base"
+      >
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+      </p>
+      <a
+        class="mb-6 text-center lg:px-4 px-2 py-1 lg:py-2 lg:w-32 w-28 text-sm lg:text-base bg-indigo-600 rounded-full border-2 border-indigo-600 hover:bg-transparent hover:text-indigo-600 text-slate-900 font-medium"
+        href="#"
+        >Get Started</a
+      >
+    </div>
+    <img
+      class="w-1/2 h-auto sm:object-bottom object-cover"
+      src="{% static 'images/hero_image.jpg' %}"
+      alt="Hero image"
+    />
+  </section>
+
+  <!-- what we do -->
+  <section class="sm:px-12 px-4 sm:mb-24 mb-12">
+    <div class="flex justify-center mb-6">
+      <h1
+        class="text-center sm:text-3xl text-2xl font-bold mb-6 text-slate-300"
+      >
+        How It Works
+      </h1>
+      {% include "core/dot.html" %}
+    </div>
+    <div
+      class="flex sm:flex-row flex-col justify-around gap-x-4 bg-slate-800 px-4 py-12 rounded-md"
+    >
+      <div class="flex">
+        {% include "core/check_property.html" %}
+        <h2 class="font-medium">Check out the appartment</h2>
+      </div>
+
+      {% include "core/angle-right.html" %}
+      <div class="flex">
+        {% include "core/payment.html" %}
+        <h2 class="ml-2 font-medium">Make payments</h2>
+      </div>
+
+      {% include "core/angle-right.html" %}
+      <div class="flex">
+        {% include "core/complete.html" %}
+        <h2 class="ml-2 font-medium">Move into your appartment</h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- Properties -->
+  <section class="sm:px-12 px-4 sm:mb-32 mb-24">
+    <div class="flex justify-between mb-6">
+      <div class="flex">
+        <h2 class="text-center sm:text-3xl text-2xl font-bold mb-6">
+          Properties
+        </h2>
+        {% include "core/dot.html" %}
+      </div>
+      <a
+        class="flex items-center gap-x-1 bg-slate-800 text-indigo-600 sm:px-4 px-2 h-auto"
+        href="{% url 'properties' %}"
+      >
+        <span class="">View all</span>
+        {% include "core/see-arrow.html" %}
+      </a>
+    </div>
+
+    {% if houses %}
+    <div class="grid sm:grid-cols-3 grid-cols-2 gap-x-2">
+      {% for house in houses %}
+      <a href="{{ house.get_absolute_url }}">
+        <div class="h-full rounded-md">
+          <img
+            class="rounded-t-md h-full w-full object-cover"
+            src="{{ house.image_set.all.0.url }}"
+            alt=""
+          />
+          <div class="flex bg-slate-800 rounded-b-md justify-between p-2">
+            <h2 class="sm:font-bold font-medium sm:text-base text-sm">
+              {{ house.city.name }}, {{ house.region.name }}
+            </h2>
+            <div class="flex text-indigo-600">
+              <?xml version="1.0" encoding="iso-8859-1"?>
+              <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+              <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+              <svg
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="496.262px"
+                height="496.262px"
+                viewBox="0 0 496.262 496.262"
+                style="enable-background: new 0 0 496.262 496.262"
+                xml:space="preserve"
+                class="sm:w-5 sm:h-5 w-4 h-4 fill-current mt-1"
+              >
+                <g>
+                  <path
+                    d="M477.832,274.28h-67.743v-65.106h67.743c10.179,0,18.43-8.243,18.43-18.424c0-10.182-8.251-18.43-18.43-18.43h-67.743
+                    V81.982c0-13.187-2.606-22.866-7.743-28.762c-4.882-5.609-11.301-8.219-20.19-8.219c-8.482,0-14.659,2.592-19.447,8.166
+                    c-5.077,5.902-7.654,15.599-7.654,28.821v90.343H227.627l-54.181-81.988c-4.637-7.317-8.997-14.171-13.231-20.75
+                    c-3.812-5.925-7.53-10.749-11.042-14.351c-3.109-3.189-6.652-5.657-10.796-7.554c-3.91-1.785-8.881-2.681-14.762-2.681
+                    c-7.501,0-14.31,2.055-20.83,6.277c-6.452,4.176-10.912,9.339-13.636,15.785c-2.391,6.126-3.656,15.513-3.656,27.63v77.626h-67.07
+                    C8.246,172.326,0,180.574,0,190.755c0,10.181,8.246,18.424,18.424,18.424h67.07v65.113h-67.07C8.246,274.292,0,282.538,0,292.722
+                    C0,302.9,8.246,311.14,18.424,311.14h67.07v103.143c0,12.797,2.689,22.378,8.015,28.466c5.065,5.805,11.487,8.5,20.208,8.5
+                    c8.414,0,14.786-2.707,20.07-8.523c5.411-5.958,8.148-15.533,8.148-28.442V311.14h115.308l62.399,95.683
+                    c4.339,6.325,8.819,12.709,13.287,18.969c4.031,5.621,8.429,10.574,13.069,14.711c4.179,3.742,8.659,6.484,13.316,8.157
+                    c4.794,1.726,10.397,2.601,16.615,2.601c16.875,0,34.158-5.166,34.158-43.479V311.14h67.743c10.179,0,18.43-8.252,18.43-18.43
+                    C496.262,282.532,488.011,274.28,477.832,274.28z M355.054,209.173v65.106h-60.041l-43.021-65.106H355.054z M141.936,134.364
+                    l24.76,37.956h-24.76V134.364z M141.936,274.28v-65.106h48.802l42.466,65.106H141.936z M355.054,365.153l-35.683-54.013h35.683
+                    V365.153z"
+                  />
+                </g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+                <g></g>
+              </svg>
+              <h2 class="font-bold sm:text-lg text-base">{{ house.price }}</h2>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  <!-- what our clients say -->
+  <section class="bg-slate-800 py-24 sm:px-32 px-4 sm:mb-24 mb-12">
+    <div class="flex justify-center">
+      <h2 class="text-slate-300 sm:text-3xl text-2xl font-bold mb-12">
+        What our clients say
+      </h2>
+      {% include "core/dot.html" %}
+    </div>
+    <div class="relative">
+      {% include "core/left-arrow.html" %}
+      <div
+        class="carousel_items hidden sm:flex-row flex-col justify-center gap-x-4"
+      >
+        <img
+          class="sm:w-72 sm:h-96 h-56 rounded-md object-cover shadow-md"
+          src="{% static 'images/murphy.jpg' %}"
+          alt=""
+        />
+        <div class="relative flex pt-10 sm:pt-0 items-center sm:w-1/2 w-full">
+          {% include "core/qoute1.html" %}
+          <div>
+            <p
+              class="lg:text-lg sm:text-base text-sm leading-tight sm:leading-normal"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore
+              aspernatur sunt similique, deleniti, alias corporis a ex
+              reprehenderit fuga, iusto nam impedit inventore adipisci optio
+              doloremque quae repudiandae. Ab, voluptatum!
+            </p>
+            <div class="flex mt-2 justify-end">
+              <span class="italic sm:text-base font-medium text-sm"
+                >- Charlie Murphy</span
+              >
+            </div>
+          </div>
+
+          {% include "core/qoute2.html" %}
+        </div>
+      </div>
+
+      <div
+        class="carousel_items hidden sm:flex-row flex-col justify-center gap-x-4"
+      >
+        <img
+          class="sm:w-72 sm:h-96 h-56 rounded-md object-cover shadow-md"
+          src="{% static 'images/wiesehofer.jpg' %}"
+          alt="client image"
+        />
+        <div class="relative flex pt-10 sm:pt-0 items-center sm:w-1/2 w-full">
+          {% include "core/qoute1.html" %}
+          <div>
+            <p
+              class="lg:text-lg sm:text-base text-sm leading-tight sm:leading-normal"
+            >
+              Lorem, ipsum dolor sit amet deleniti, alias corporis a ex
+              reprehenderit fuga, iusto nam impedit inventore adipisci optio
+              doloremque quae repudiandae. Ab, voluptatum!
+            </p>
+            <div class="flex mt-2 justify-end">
+              <span class="italic sm:text-base font-medium text-sm"
+                >- Jenny wiesehofer</span
+              >
+            </div>
+          </div>
+
+          {% include "core/qoute2.html" %}
+        </div>
+      </div>
+
+      <div
+        class="carousel_items hidden sm:flex-row flex-col justify-center gap-x-4"
+      >
+        <img
+          class="sm:w-72 sm:h-96 h-56 rounded-md object-cover shadow-md"
+          src="{% static 'images/cagle.jpg' %}"
+          alt="client image"
+        />
+        <div class="relative flex pt-10 sm:pt-0 items-center sm:w-1/2 w-full">
+          {% include "core/qoute1.html" %}
+          <div>
+            <p
+              class="lg:text-lg sm:text-base text-sm leading-tight sm:leading-normal"
+            >
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tempore
+              aspernatur sunt similique, deleniti, alias corporis a ex
+              reprehenderit fuga, iusto nam impedit inventore adipisci optio
+              doloremque quae repudiandae. Ab, voluptatum! Lorem, ipsum dolor
+              sit amet consectetur adipisicing elit.
+            </p>
+            <div class="flex mt-2 justify-end">
+              <span class="italic sm:text-base font-medium text-sm"
+                >- Amelia Cagle</span
+              >
+            </div>
+          </div>
+
+          {% include "core/qoute2.html" %}
+        </div>
+      </div>
+
+      {% include "core/right-arrow.html" %}
+    </div>
+  </section>
+
+  <!-- meet our agents -->
+  <section class="py-24 mb-24 px-4 m sm:px-12">
+    <div class="flex justify-between mb-6">
+      <div class="flex">
+        <h2 class="sm:text-3xl text-2xl font-bold mb-6">Meet our agents</h2>
+        {% include "core/dot.html" %}
+      </div>
+      <a
+        class="flex items-center gap-x-1 bg-slate-800 text-indigo-600 sm:px-4 px-2 h-auto"
+        href="{% url 'agents' %}"
+      >
+        <span>View all</span>
+        {% include "core/see-arrow.html" %}
+      </a>
+    </div>
+    {% if agents %}
+    <div class="grid sm:grid-cols-4 grid-cols-2 gap-x-2 sm:gap-x-4">
+      {% for agent in agents %} {% if not agent.is_staff %}
+      <div class="relative">
+        {% if forloop.counter|divisibleby:"2" %}
+        <a href="{% url 'agent-detail' agent.pk %}">
+          <img
+            class="rounded-md h-56 w-full object-cover shadow-md"
+            src="{{ agent.photo_url }}"
+            alt=""
+          />
+          <span
+            class="absolute sm:top-[67%] top-[72%] rounded-md opacity-90 ml-2 font-medium bg-slate-800 px-2 py-1"
+          >
+            {{ agent.first_name|title }} {{ agent.last_name|title }}
+          </span>
+        </a>
+        {% else %}
+        <a href="{% url 'agent-detail' agent.pk %}">
+          <img
+            class="rounded-md h-56 w-full object-cover sm:mt-12 mt-8 shadow-md"
+            src="{{ agent.photo_url }}"
+            alt=""
+          />
+          <span
+            class="absolute top-[85%] rounded-md opacity-90 ml-2 font-medium bg-slate-800 px-2 py-1"
+          >
+            {{ agent.first_name|title }} {{ agent.last_name|title }}
+          </span>
+        </a>
+        {% endif %}
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+</main>
+{% endblock %} {% block js %}
+<script>
+  const carousel_items = document.getElementsByClassName("carousel_items");
+  const next = document.getElementById("next");
+  const previous = document.getElementById("previous");
+
+  carousel_items[0].style.display = "flex";
+
+  let spot = 0;
+
+  next.addEventListener("click", () => {
+    try {
+      carousel_items[spot].style.display = "none";
+      spot++;
+      carousel_items[spot].style.display = "flex";
+    } catch (TypeError) {
+      spot = 0;
+      carousel_items[spot].style.display = "flex";
+    }
+  });
+
+  previous.addEventListener("click", () => {
+    try {
+      carousel_items[spot].style.display = "none";
+      spot--;
+      carousel_items[spot].style.display = "flex";
+    } catch (TypeError) {
+      spot = carousel_items.length - 1;
+      carousel_items[spot].style.display = "flex";
+    }
+  });
+</script>
+{% endblock %}

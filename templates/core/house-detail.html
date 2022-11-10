@@ -1,0 +1,243 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+{% if user == object.agent %}
+<div class="flex justify-end gap-x-2 lg:mx-12 md:mx-4 mx-2 mt-2">
+  <a class="md:text-base text-xs font-medium underline text-indigo-600" href="{% url 'property-edit' object.pk %}">Edit
+    property</a>
+  <span id="modal_toggle" class="md:text-base text-xs font-medium underline text-red-400 cursor-pointer ">Delete
+    property</span>
+</div>
+{% endif %}
+<section class="relative flex flex-col md:flex-row w-full lg:gap-x-8 my-8 lg:px-12 md:px-4 md:gap-x-4 px-2">
+  <!-- delete modal  -->
+  {% if user == object.agent %}
+  <div id="modal" style="display: none ;"
+    class="border-2 border-slate-900 absolute sm:left-1/4 left-[5%] top-[20%] bg-slate-800 p-4 rounded-md"
+    tabindex="-1">
+    <button class="cancel_btn relative left-[90%] p-2 rounded-md bg-slate-700 hover:bg-slate-900">
+      <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+          clip-rule="evenodd"></path>
+      </svg>
+    </button>
+    <span class="sr-only">Close modal</span>
+    <h2 class="my-4">Are you sure you want to delete this property?</h2>
+    <div class="flex justify-center gap-x-2 my-4">
+      <button id="delete_btn" data-property-id="{{ object.id }}"
+        class="px-5 py-1 border-2 border-red-500 font-semibold hover:text-red-500 hover:bg-transparent bg-red-500 rounded-md">Yes</button>
+      <button
+        class="cancel_btn px-5 py-1 border-2 border-indigo-600 bg-indigo-600 hover:bg-transparent text-slate-900 rounded-md hover:text-indigo-600 font-semibold">No</button>
+    </div>
+  </div>
+  {% endif %}
+
+  <main class="md:w-[70%] w-full low-opacity">
+    <a class="block" href="{% url 'property-images' object.id %}">
+    {% if images.count == 1 %}
+    <img class="rounded-md" src="{{ images.0.url }}" alt="House image" />
+    {% endif %}
+
+    {% if images.count == 2 %}
+    <div class="grid grid-cols-2 md:gap-2 gap-1">
+      <img class="rounded-l-md w-full h-full object-cover" src="{{ images.0.url }}" alt="House image" />
+      <img class="rounded-r-md w-full h-full object-cover" src="{{ images.1.url }}" alt="House image" />
+    </div>
+    {% endif %}
+
+    {% if images.count == 3 %}
+    <div class="grid grid-cols-6 md:gap-2 gap-1">
+      <img class="row-span-2 h-full col-span-4 rounded-l-md object-cover" src="{{ images.0.url }}"
+        alt="House image" />
+      <img class="h-full col-span-2 rounded-tr-md object-cover" src="{{ images.1.url }}" alt="House image" />
+      <img class="h-full col-span-2 rounded-br-md object-cover" src="{{ images.2.url }}" alt="House image" />
+    </div>
+    {% endif %}
+
+    {% if images.count > 3 %}
+    <div class="grid md:h-[36rem] grid-cols-6 md:gap-2 gap-1">
+      <img class="md:h-[36rem] h-full row-span-3 col-span-4 rounded-l-md object-cover" src="{{ images.0.url }}"
+        alt="House image" />
+      <img class="md:h-[11.65rem] w-full col-span-2 rounded-tr-md object-cover" src="{{ images.1.url }}"
+        alt="House image" />
+      <img class="md:h-[11.65rem] w-full col-span-2 object-cover" src="{{ images.2.url }}" alt="House image" />
+      <div class="relative col-span-2">
+        <img class="md:h-[11.65rem] w-full rounded-br-md object-cover" src="{{ images.3.url }}"
+          alt="House image" />
+        <div id="other-images" data-other-images='{{ images.count|add:"-4" }}'
+          class="absolute flex justify-center items-center top-[0] bg-white/30 rounded-br-md h-full w-full">
+          <p class="text-lg text-slate-900">+{{ images.count|add:"-4" }} photos</p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    </a>
+
+    <div class="flex text-slate-400 justify-between">
+      <div class="flex gap-x-2">
+        {% include "core/location.html" %}
+        <h2 class="text-slate-400 text-sm md:text-base md:font-medium mt-4">
+          {{ object.address }}, {{ object.city.name }}, {{ object.region.name }}
+        </h2>
+      </div>
+
+      <div class="flex self-end gap-x-1">
+        {% include "core/naira.html" %}
+        <h2 class="text-lg font-semibold md:font-bold md:text-2xl">{{ object.price }}</h2>
+      </div>
+    </div>
+
+    <div class="flex justify-around gap-x-2 p-2 bg-slate-800 rounded-md mt-2">
+      {% if object.sitting_rooms %}
+      <div class="flex flex-col items-center text-slate-400 hover:text-indigo-600">
+        {% include "core/sofa.html" %}
+        <p class="text-center text-xs md:text-sm">{{ object.sitting_rooms }} Sitting Room(s)</p>
+      </div>
+
+      {% endif %} {% if object.dining_rooms %}
+      <div class="flex flex-col items-center text-slate-400 hover:text-indigo-600">
+        {% include "core/fork_plate.html" %}
+
+        <p class="text-center text-xs md:text-sm">{{ object.dining_rooms }} Dining Room(s)</p>
+      </div>
+
+      {% endif %} {% if object.kitchen %}
+      <div class="flex flex-col items-center text-slate-400 hover:text-indigo-600">
+        {% include "core/stove.html" %}
+
+        <p class="text-center text-xs md:text-sm">{{ object.kitchen }} Kitchen(s)</p>
+      </div>
+      {% endif %} {% if object.rooms %}
+      <div class="flex flex-col items-center text-slate-400 hover:text-indigo-600">
+        {% include "core/room.html" %}
+
+        <p class="text-center text-xs md:text-sm">{{ object.rooms }} Room(s)</p>
+      </div>
+      {% endif %} {% if object.garages %}
+      <div class="flex mt-1 flex-col items-center text-slate-400 hover:text-indigo-600">
+        {% include "core/garages.html" %}
+
+        <p class="text-center text-xs md:text-sm">{{ object.garages }} Garage(s)</p>
+      </div>
+      {% endif %}
+    </div>
+    <div class="text-slate-400 mt-6">
+      <div class="flex">
+        <h2 class="md:text-2xl text-xl font-semibold text-indigo-600">Description</h2>
+        {% include "core/dot.html" %}
+      </div>
+      <p class="text-sm md:text-base break-words">{{ object.description }}</p>
+    </div>
+  </main>
+
+  <aside class="w-full mt-14 md:mt-0 md:w-[30%] bg-slate-800 p-2 rounded-md low-opacity">
+    <div class="flex p-2 items-centernter justify-start gap-2">
+      {% if object.agent.photo_url %}
+      <img class="w-12 h-12 object-cover rounded-full" src="{{ object.agent.photo_url }}" alt="agent profile pic" />
+      {% else %}
+      <img class="w-12 h-12 object-cover rounded-full" src="{% static 'images/dummy-pic.png' %}"
+        alt="agent profile pic" />
+      {% endif %}
+      <div>
+        <h2 class="text-slate-400 font-semibold">
+          {{ object.agent.first_name|title }} {{ object.agent.last_name|title }}
+        </h2>
+        <p class="text-slate-400 text-sm italic">{{ object.agent.email }}</p>
+      </div>
+    </div>
+    <h2 class="m-4 text-slate-400 font-semibold text-lg">
+      Contact {{ object.agent.first_name|title }}
+    </h2>
+    <form action=".">
+      <input placeholder="Your email address"
+        class="w-full outline-none focus:border-2 focus:border-indigo-600 placeholer-opacity-0.5 placeholder:italic placeholder:text-sm placeholder:opacity-70 p-1 rounded-md text-slate-400 bg-slate-900"
+        type="email" />
+      <textarea placeholder="Let the agent know you're interested...."
+        class="w-full outline-none focus:border-2 focus:border-indigo-600 placeholer-opacity-0.5 placeholder:italic placeholder:text-sm placeholder:opacity-70 p-1 text-slate-400 mt-2 rounded-md bg-slate-900"
+        name="message" id="message" rows="7"></textarea>
+      <br />
+      <input
+        class="bg-indigo-600 text-slate-900 rounded-md w-full mt-4 py-2 font-semibold border-2 border-indigo-600 hover:text-indigo-600 hover:bg-transparent"
+        type="submit" value="Submit" />
+    </form>
+  </aside>
+</section>
+
+{% endblock %} {% block js %}
+<script>
+  const otherImages = document.getElementById("other-images");
+
+  if (otherImages) {
+    if (+otherImages.dataset.otherImages) {
+      otherImages.style.display = "flex"
+    } else {
+      otherImages.style.display = "none"
+    }
+  }
+
+  function getCookie (name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Does this cookie string begin with the name we want?
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  const modalToggle = document.getElementById("modal_toggle")
+  const modal = document.getElementById("modal")
+  const csrftoken = getCookie("csrftoken");
+  const deleteBtn = document.getElementById("delete_btn");
+  const cancelBtns = document.getElementsByClassName("cancel_btn")
+
+  if (modalToggle) {
+    modalToggle.addEventListener("click", (e) => {
+      if (modal.style.display === "none") {
+        modal.style.display = "block"
+      }
+    })
+
+  }
+
+  for (btn of cancelBtns) {
+    btn.addEventListener("click", (e) => {
+      if (modal.style.display === "block") {
+        modal.style.display = "none"
+      }
+    })
+  }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", (e) => {
+      const data = { house_id: e.target.dataset.propertyId };
+      fetch("{% url 'delete-house' %}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": csrftoken,
+        },
+        body: JSON.stringify(data),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.delete) {
+            window.location.replace("{% url 'properties' %}")
+          }
+        })
+        .catch((err) => { console.log(err); });
+    })
+  }
+
+
+
+</script>
+{% endblock %}
