@@ -92,13 +92,25 @@ class UserModelAdmin(admin.ModelAdmin):
             request, object_id, form_url=form_url, extra_context=extra_context
         )
 
+    def delete_pic(self, obj):
+        photo_name = obj.photo_name
+        if photo_name:
+            cloudinary.uploader.destroy(photo_name)
+
+    def upload_pic(self, photo):
+        data = cloudinary.uploader.upload(photo)
+        return data
+
     def save_model(self, request, obj, form, change):
         photo = request.FILES.get("photo")
         if photo:
-            xphoto_name = obj.photo_name
-            if xphoto_name:
-                cloudinary.uploader.destroy(xphoto_name)
-            data = cloudinary.uploader.upload(photo)
+
+            with ThreadPoolExecutor() as executor:
+                executor.submit(self.delete_pic, obj)
+                data = executor.submit(self.upload_pic, photo)
+
+            data = data.result()
+    
             obj.photo_url=data["secure_url"]
             obj.photo_name=data["public_id"]
         obj.save()

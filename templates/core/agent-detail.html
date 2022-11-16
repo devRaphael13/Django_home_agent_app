@@ -54,14 +54,14 @@
         </a>
         {% endif %}
       </div>
-      {% if user == object %}
+      {% if request.user  == object %}
       <a class="md:text-base text-xs font-medium underline text-indigo-600" href="{% url 'logout' %}">Logout</a>
       {% endif %}
     </div>
   </div>
 
   <main>
-    {% if user == object %}
+    {% if request.user == object %}
     <a class="flex justify-end mr-8 my-8 hover:text-indigo-600" href="{% url 'add-property' %}">
       Add
       {% include "core/add.html" %}

@@ -150,7 +150,6 @@ class AgentDetailView(DetailView):
         context.update(
             {
                 "houses": House.objects.filter(agent=self.get_object()),
-                "user": self.request.user,
             }
         )
 
@@ -199,14 +198,26 @@ class AgentEditView(LoginRequiredMixin, UpdateView):
     form_class = CustomUserChangeForm
     template_name = "core/agent-update.html"
 
+    def upload(self, photo):
+        data = cloudinary.uploader.upload(photo)
+        return data
+
+    def delete_photo(self, form):
+        photo_name = form.instance.photo_name
+        if photo_name:
+            cloudinary.uploader.destroy(photo_name)
+
+
     def form_valid(self, form):
         form.save(commit=False)
         photo = self.request.FILES.get("photo")
         if photo:
-            xphoto_name = form.instance.photo_name
-            if xphoto_name:
-                cloudinary.uploader.destroy(xphoto_name)
-            data = cloudinary.uploader.upload(photo)
+            with ThreadPoolExecutor() as executor:
+                executor.submit(self.delete_photo, form)
+                data = executor.submit(self.upload, photo)
+            
+            data = data.result()
+
             form.instance.photo_url=data["secure_url"]
             form.instance.photo_name=data["public_id"]
         return super().form_valid(form)
