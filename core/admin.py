@@ -1,19 +1,18 @@
 import json
+
 import cloudinary
 import cloudinary.api
 import cloudinary.uploader
-from django.contrib import admin
+from concurrent.futures import ThreadPoolExecutor
 from django.conf import settings
+from django.contrib import admin
 
 from .forms import (
-    AdminHouseCreationForm, 
+    AdminHouseCreationForm,
     AdminUserChangeForm,
     AdminUserCreationForm
     )
 from .models import House, Image, User
-
-
-
 
 config = cloudinary.config(
     cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],
@@ -54,9 +53,14 @@ class HouseModelAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.save()
         images = request.FILES.getlist("images")
-        for image in images:
-            data = json.dumps(cloudinary.uploader.upload(image))
-            Image.objects.create(house=obj, url=data["secure_url"], name=data["public_id"])
+        with ThreadPoolExecutor() as executor:
+            executor.map(self.upload, images)
+            
+        return super().form_valid(form)
+
+    def upload(self, image):
+        data = cloudinary.uploader.upload(image)
+        Image.objects.create(house=self.object, url=data["secure_url"], name=data["public_id"])
 
 class UserModelAdmin(admin.ModelAdmin):
     model = User

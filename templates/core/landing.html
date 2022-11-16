@@ -25,6 +25,7 @@
       >
     </div>
     <img
+      loading="lazy"
       class="w-1/2 h-auto sm:object-bottom object-cover"
       src="{% static 'images/hero_image.jpg' %}"
       alt="Hero image"
@@ -87,6 +88,7 @@
       <a href="{{ house.get_absolute_url }}">
         <div class="h-full rounded-md">
           <img
+            loading="lazy"
             class="rounded-t-md h-full w-full object-cover"
             src="{{ house.image_set.all.0.url }}"
             alt=""
@@ -172,6 +174,7 @@
         <img
           class="sm:w-72 sm:h-96 h-56 rounded-md object-cover shadow-md"
           src="{% static 'images/murphy.jpg' %}"
+          loading="lazy"
           alt=""
         />
         <div class="relative flex pt-10 sm:pt-0 items-center sm:w-1/2 w-full">
@@ -202,6 +205,7 @@
         <img
           class="sm:w-72 sm:h-96 h-56 rounded-md object-cover shadow-md"
           src="{% static 'images/wiesehofer.jpg' %}"
+          loading="lazy"
           alt="client image"
         />
         <div class="relative flex pt-10 sm:pt-0 items-center sm:w-1/2 w-full">
@@ -231,6 +235,7 @@
         <img
           class="sm:w-72 sm:h-96 h-56 rounded-md object-cover shadow-md"
           src="{% static 'images/cagle.jpg' %}"
+          loading="lazy"
           alt="client image"
         />
         <div class="relative flex pt-10 sm:pt-0 items-center sm:w-1/2 w-full">
@@ -284,6 +289,7 @@
           <img
             class="rounded-md h-56 w-full object-cover shadow-md"
             src="{{ agent.photo_url }}"
+            loading="lazy"
             alt=""
           />
           <span
@@ -297,6 +303,7 @@
           <img
             class="rounded-md h-56 w-full object-cover sm:mt-12 mt-8 shadow-md"
             src="{{ agent.photo_url }}"
+            loading="lazy"
             alt=""
           />
           <span

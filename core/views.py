@@ -4,6 +4,7 @@ import cloudinary
 import cloudinary.api
 import cloudinary.uploader
 
+from concurrent.futures import ThreadPoolExecutor
 from cities_light.models import City, Region
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -13,7 +14,7 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import render, resolve_url, reverse
+from django.shortcuts import render, resolve_url, reverse, redirect
 from django.views.generic import (
     CreateView,
     DetailView,
@@ -169,9 +170,7 @@ class AgentSignUpView(CreateView):
             form.instance.photo_url=data["secure_url"]
             form.instance.photo_name=data["public_id"]
         return super().form_valid(form)
-    
-    
-        
+      
 
 class AgentLoginView(LoginView):
     template_name = "core/login.html"
@@ -213,7 +212,7 @@ class AgentEditView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("agent-detail", args=(self.get_object().id,))
+        return reverse("agent-detail", args=(self.object.id,))
     
 
 class HouseCreateView(LoginRequiredMixin, CreateView):
@@ -227,18 +226,23 @@ class HouseCreateView(LoginRequiredMixin, CreateView):
         form.instance.agent = self.request.user
         self.object = form.save()
         images = self.request.FILES.getlist("images")
-        for image in images:
-            data = cloudinary.uploader.upload(image)
-            Image.objects.create(house=self.object, url=data["secure_url"], name=data["public_id"])
+
+        with ThreadPoolExecutor() as executor:
+            executor.map(self.upload, images)
+
         return super().form_valid(form)
+
+    def upload(self, image):
+        data = cloudinary.uploader.upload(image)
+        Image.objects.create(house=self.object, url=data["secure_url"], name=data["public_id"])
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context.update({"title": "Add Property"})
         return context
 
-    def get_success_url(self):
-        return reverse("property-detail", args=(self.get_object().id,))
+    def get_success_url(self, *args, **kwargs):
+        return reverse("property-detail", args=(self.object.id,))
 
 
 class HouseUpdateView(LoginRequiredMixin, UpdateView):
@@ -253,10 +257,14 @@ class HouseUpdateView(LoginRequiredMixin, UpdateView):
         form.save(commit=False)
         self.object = form.save()
         images = self.request.FILES.getlist("images")
-        for image in images:
-            data = cloudinary.uploader.upload(image)
-            Image.objects.create(house=self.object, url=data["secure_url"], name=data["public_id"])
+        with ThreadPoolExecutor() as executor:
+            executor.map(self.upload, images)
+
         return super().form_valid(form)
+
+    def upload(self, image):
+        data = cloudinary.uploader.upload(image)
+        Image.objects.create(house=self.object, url=data["secure_url"], name=data["public_id"])
  
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
@@ -265,8 +273,8 @@ class HouseUpdateView(LoginRequiredMixin, UpdateView):
             })
         return context
 
-    def get_success_url(self):
-        return reverse("property-detail", args=(self.get_object().id,))
+    def get_success_url(self, *args, **kwargs):
+        return reverse("property-detail", args=(self.object.id,))
 
 
 class ImageIndexView(ListView):
@@ -337,11 +345,12 @@ def delete_house(request):
 
         images = Image.objects.filter(house_id=data["house_id"])
 
-        if images.count() > 1:
-            cloudinary.api.delete_resources(list(images.values_list("name", flat=True)))
-        
-        else:
-            cloudinary.uploader.destroy(images.first().name)
+        if images:
+            if images.count() > 1:
+                cloudinary.api.delete_resources(list(images.values_list("name", flat=True)))
+            
+            else:
+                cloudinary.uploader.destroy(images.first().name)
 
         house.delete()
         return JsonResponse({"delete": True}, safe=False)

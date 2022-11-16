@@ -96,7 +96,7 @@
           {% for house in queryset %}
           <a class="shadow-md" href="{{ house.get_absolute_url }}">
             <div class="rounded-md">
-                <img class="rounded-t-md h-52 w-full object-cover" src="{{ house.image_set.all.0.url }}"
+                <img loading="lazy" class="rounded-t-md h-52 w-full object-cover" src="{{ house.image_set.all.0.url }}"
                     alt="">
                 <div class="flex bg-slate-800 rounded-b-md justify-between p-2">
                     <h2 class="sm:font-bold font-medium sm:text-base text-sm">

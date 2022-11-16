@@ -7,7 +7,7 @@
     {% if not agent.is_staff %}
     <div class="w-full bg-slate-800 rounded-md">
       <a href="{% url 'agent-detail' agent.pk %}">
-        <img class="h-56 w-full rounded-t-md object-cover" src="{{ agent.photo_url }}" alt="agent image">
+        <img loading="lazy" class="h-56 w-full rounded-t-md object-cover" src="{{ agent.photo_url }}" alt="agent image">
       </a>
       <h2 class="mx-2 font-medium">{{ agent.first_name }} {{ agent.last_name }}</h2>
       <div class="px-2 flex flex-col sm:flex-row justify-between mt-2 mb-4 ">

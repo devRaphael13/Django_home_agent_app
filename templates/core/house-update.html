@@ -12,8 +12,8 @@
         <label class="text-slate-400 font-medium" for="id_address"
           >Address</label
         >
-        {{ form.address }} {% if form.address.errors %} 
-        {% for error in form.address.errors %}
+        {{ form.address }} {% if form.address.errors %} {% for error in
+        form.address.errors %}
         <p class="text-red-500 text-sm">{{ error }}</p>
         {% endfor %} {% endif %}
       </div>
@@ -22,8 +22,8 @@
         <label class="text-slate-400 font-medium" for="id_description"
           >Description</label
         >
-        {{ form.description }} {% if form.descripion.errors %} 
-        {% for error in form.descripion.errors %}
+        {{ form.description }} {% if form.descripion.errors %} {% for error in
+        form.descripion.errors %}
         <p class="text-red-500 text-sm">{{ error }}</p>
         {% endfor %} {% endif %}
       </div>
@@ -32,8 +32,8 @@
         <label class="text-slate-400 font-medium" for="id_price"
           >Price (naira)</label
         >
-        {{ form.price }} {% if form.price.errors %} 
-        {% for error in form.price.errors %}
+        {{ form.price }} {% if form.price.errors %} {% for error in
+        form.price.errors %}
         <p class="text-red-500 text-sm">{{ error }}</p>
         {% endfor %} {% endif %}
       </div>
@@ -43,7 +43,8 @@
           <label class="text-slate-400 font-medium" for="id_sitting_rooms"
             >Sitting Rooms</label
           >
-          {{ form.sitting_rooms }} {% if form.sitting_rooms.errors %} {% for error in form.sitting_rooms.errors %}
+          {{ form.sitting_rooms }} {% if form.sitting_rooms.errors %} {% for
+          error in form.sitting_rooms.errors %}
           <p class="text-red-500 text-sm">{{ error }}</p>
           {% endfor %} {% endif %}
         </div>
@@ -51,7 +52,8 @@
           <label class="text-slate-400 font-medium" for="id_dining_rooms"
             >Dining Rooms</label
           >
-          {{ form.dining_rooms }} {% if form.dining_rooms.errors %} {% for error in form.dining_rooms.errors %}
+          {{ form.dining_rooms }} {% if form.dining_rooms.errors %} {% for error
+          in form.dining_rooms.errors %}
           <p class="text-red-500 text-sm">{{ error }}</p>
           {% endfor %} {% endif %}
         </div>
@@ -60,8 +62,8 @@
       <div class="grid grid-cols-2 gap-x-2">
         <div class="mb-4">
           <label class="text-slate-400 font-medium" for="id_rooms">Rooms</label>
-          {{ form.rooms }} {% if form.rooms.errors %} 
-          {% for error in form.rooms.errors %}
+          {{ form.rooms }} {% if form.rooms.errors %} {% for error in
+          form.rooms.errors %}
           <p class="text-red-500 text-sm">{{ error }}</p>
           {% endfor %} {% endif %}
         </div>
@@ -69,8 +71,8 @@
           <label class="text-slate-400 font-medium" for="id_bathrooms"
             >Bathrooms</label
           >
-          {{ form.bathrooms }} {% if form.bathrooms.errors %} 
-          {% for error in form.bathrooms.errors %}
+          {{ form.bathrooms }} {% if form.bathrooms.errors %} {% for error in
+          form.bathrooms.errors %}
           <p class="text-red-500 text-sm">{{ error }}</p>
           {% endfor %} {% endif %}
         </div>
@@ -79,10 +81,10 @@
       <div class="grid grid-cols-2 gap-x-2">
         <div class="mb-4">
           <label class="text-slate-400 font-medium" for="id_kitchen"
-            >Kitchen</label
+            >Kitchens</label
           >
-          {{ form.kitchen }} {% if form.kitchen.errors %} 
-          {% for error in form.kitchen.errors %}
+          {{ form.kitchen }} {% if form.kitchen.errors %} {% for error in
+          form.kitchen.errors %}
           <p class="text-red-500 text-sm">{{ error }}</p>
           {% endfor %} {% endif %}
         </div>
@@ -90,8 +92,8 @@
           <label class="text-slate-400 font-medium" for="id_garages"
             >Garages</label
           >
-          {{ form.garages }} {% if form.garages.errors %} 
-          {% for error in form.garages.errors %}
+          {{ form.garages }} {% if form.garages.errors %} {% for error in
+          form.garages.errors %}
           <p class="text-red-500 text-sm">{{ error }}</p>
           {% endfor %} {% endif %}
         </div>
@@ -147,9 +149,7 @@
           </a>
           <span
             data-image-id="{{ image.id }}"
-            class="delete_btn text-red-500 font-medium text-sm underline cursor-pointer"
-            >Delete</span
-          >
+            class="delete_btn text-red-500 font-medium text-sm underline cursor-pointer">Delete</span>
         </div>
         {% endfor %}
       </div>

@@ -3,7 +3,7 @@
 {% block content %} 
 <section class="mx-12 mt-12 mb-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
     {% for image in object_list %}
-        <img class="h-full w-full object-cover" src="{{ image.image.url }}" alt="property image">
+        <img loading="lazy" class="h-full w-full object-cover" src="{{ image.url }}" alt="property image">
     {% endfor %}
 </section>
 <div class="mb-4 flex justify-center">

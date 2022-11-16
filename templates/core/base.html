@@ -31,10 +31,20 @@
     .rotate {
       transform: rotate(270deg);
     }
+
+    .wrap {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+    }
     
     @media only screen and (min-width: 768px) {
       .rotate {
         transform: rotate(180deg);
+      }
+
+      .wrap {
+        flex-wrap: nowrap;
+        row-gap: 0;
       }
     }
   </style>

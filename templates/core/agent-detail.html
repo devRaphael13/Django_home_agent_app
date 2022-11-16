@@ -12,9 +12,9 @@
   {% endif %}
   <div class="flex justify-center items-center gap-x-4 bg-slate-800 shadow-md p-12">
     {% if object.photo_url %}
-    <img class="sm:w-48 w-32 h-32 sm:h-48 object-cover rounded-full" src="{{ object.photo_url }}" alt="">
+    <img loading="lazy" class="sm:w-48 w-32 h-32 sm:h-48 object-cover rounded-full" src="{{ object.photo_url }}" alt="">
     {% else %}
-    <img class="sm:w-48 w-32 h-32 sm:h-48 object-cover rounded-full" src="{% static 'images/dummy.png' %}" alt="">
+    <img loading="lazy" class="sm:w-48 w-32 h-32 sm:h-48 object-cover rounded-full" src="{% static 'images/dummy.png' %}" alt="">
     {% endif %}
     <div class="flex flex-col sm:gap-y-4 gap-y-1">
       <h1 class="font-bold sm:text-4xl text-2xl">{{ object.first_name|title }} {{ object.last_name|title }}</h1>
@@ -73,7 +73,7 @@
       {% for house in houses %}
       <a class="shadow-md" href="{{ house.get_absolute_url }}">
         <div class="rounded-md">
-          <img class="rounded-t-md h-52 w-full object-cover" src="{{ house.image_set.all.0.url }}" alt="">
+          <img loading="lazy" class="rounded-t-md h-52 w-full object-cover" src="{{ house.image_set.all.0.url }}" alt="">
           <div class="flex bg-slate-800 rounded-b-md justify-between p-2">
             <h2 class="sm:font-bold font-medium sm:text-base text-sm">
               {{ house.city.name }}, {{ house.region.name }}
