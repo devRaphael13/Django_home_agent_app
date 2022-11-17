@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% block content %}
 <main class="my-12 sm:p-12 p-8">
   <h1 class="sm:text-3xl text-2xl font-medium title-font text-indigo-600 text-center my-8">Our Agents</h1>
@@ -7,7 +8,11 @@
     {% if not agent.is_staff %}
     <div class="w-full bg-slate-800 rounded-md">
       <a href="{% url 'agent-detail' agent.pk %}">
+        {% if agent.photo_url %}
         <img loading="lazy" class="h-56 w-full rounded-t-md object-cover" src="{{ agent.photo_url }}" alt="agent image">
+        {% else %}
+        <img class="h-56 w-full rounded-t-md object-cover" src="{% static 'images/dummy.png' %}" alt="agent image">
+        {% endif %}
       </a>
       <h2 class="mx-2 font-medium">{{ agent.first_name }} {{ agent.last_name }}</h2>
       <div class="px-2 flex flex-col sm:flex-row justify-between mt-2 mb-4 ">
