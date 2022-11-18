@@ -12,7 +12,7 @@ from .forms import (
     AdminUserChangeForm,
     AdminUserCreationForm
     )
-from .models import House, Image, User
+from .models import House, Image, User, Message
 
 config = cloudinary.config(
     cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],
@@ -115,6 +115,11 @@ class UserModelAdmin(admin.ModelAdmin):
             obj.photo_name=data["public_id"]
         obj.save()
 
+
+class MessageModelAdmin(admin.ModelAdmin):
+    model = Message
+
 admin.site.register(House, HouseModelAdmin)
+admin.site.register(Message, MessageModelAdmin)
 admin.site.register(User, UserModelAdmin)
 admin.site.site_header = "Home"

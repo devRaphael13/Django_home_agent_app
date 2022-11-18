@@ -64,3 +64,14 @@ class Image(models.Model):
 
     def __str__(self):
         return f"House {self.house.id} images"
+
+
+class Message(models.Model):
+    agent = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, blank=True, null=True)
+    email = models.EmailField(max_length=100)
+    message = models.TextField()
+
+    def __str__(self):
+        return f"Message from {self.email} for agent @ {self.agent.email}" if self.agent else f"Message from {self.email}"
+

@@ -1,4 +1,5 @@
 import json
+import asyncio
 
 import cloudinary
 import cloudinary.api
@@ -22,7 +23,6 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
     View,
-    FormView,
 )
 
 from core.forms import (
@@ -32,8 +32,14 @@ from core.forms import (
     CustomUserChangeForm,
     CustomUserCreationForm,
     HouseUpdateForm,
+    MessageForm
 )
-from core.models import House, Image
+
+from core.models import (
+    House,
+    Image,
+    Message
+    )
 
 config = cloudinary.config(
     cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],
@@ -58,9 +64,10 @@ class LandingPageView(TemplateView):
         return context
 
 
-class ContactPageView(TemplateView):
+class ContactPageView(CreateView):
     template_name = "core/contact.html"
-
+    form_class = MessageForm
+    success_url = reverse_lazy("home")
 
 class HouseIndexView(View):
     template_name = "core/house-index.html"
@@ -132,8 +139,23 @@ class HouseDetailView(DetailView):
         context = super().get_context_data(*args, **kwargs)
         house = self.get_object()
         images = house.image_set.all()
-        context.update({"images": images, "user": self.request.user})
+        form = MessageForm()
+        context.update({"images": images, "user": self.request.user, "form": form})
         return context
+
+    def post(self, request, *args, **kwargs):
+        form = MessageForm(request.POST)
+
+        if form.is_valid():
+            Message.objects.create(
+                name=form.cleaned_data["name"],
+                email=form.cleaned_data["email"],
+                agent=self.get_object().agent,
+                message=form.cleaned_data["message"]
+            )
+
+            return redirect(reverse("properties"))
+        return redirect(reverse("property-detail", args=(self.get_object().id,)))
 
 
 class AgentIndexView(ListView):
@@ -300,7 +322,8 @@ class ImageIndexView(ListView):
             "house_id": self.kwargs['pk']
         })
         return context
-    
+
+
 def delete_images(request):
     data = json.loads(request.body)
 

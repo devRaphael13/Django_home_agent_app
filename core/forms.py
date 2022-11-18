@@ -12,7 +12,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
-from .models import House, Image
+from .models import House, Image, Message
 
 User = get_user_model()
 
@@ -383,3 +383,25 @@ class HouseUpdateForm(forms.ModelForm):
         widgets = HouseCreationForm.Meta.widgets
         widgets.pop("region")
         widgets.pop("city")
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = "__all__"
+
+        widgets = {
+            "name": forms.TextInput(
+                    attrs={
+                        "class": "placeholer-opacity-0.5 placeholder:italic placeholder:text-sm w-full bg-slate-900 rounded-md focus:border-2 focus:border-indigo-600 outline-none text-slate-400 py-1 px-3"
+                        }),
+
+            "email": forms.EmailInput(
+                    attrs={
+                        "class": "placeholer-opacity-0.5 placeholder:italic placeholder:text-sm w-full bg-slate-900 rounded-md focus:border-2 focus:border-indigo-600 outline-none text-slate-400 py-1 px-3",
+                        }),
+
+            "message": forms.Textarea(
+                attrs={
+                    "class": "placeholer-opacity-0.5 placeholder:italic placeholder:text-sm w-full bg-slate-900 rounded-md focus:border-2 focus:border-indigo-600 outline-none text-slate-400"
+                    })
+        }
