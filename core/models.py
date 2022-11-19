@@ -1,6 +1,5 @@
 import os
 
-from cities_light.models import City, Region
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, User
 from django.core.mail import send_mail
@@ -31,6 +30,23 @@ class User(AbstractUser):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class Region(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "cities"
+
+    def __str__(self):
+        return self.name
 
 class House(models.Model):
     agent = models.ForeignKey(User, on_delete=models.CASCADE)

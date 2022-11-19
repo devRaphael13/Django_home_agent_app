@@ -1,6 +1,5 @@
 import datetime
 import re
-from cities_light.models import City
 from django import forms
 from django.contrib.auth import get_user_model, authenticate, password_validation
 from django.contrib.auth.forms import (
@@ -12,7 +11,13 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
-from .models import House, Image, Message
+from .models import (
+    House, 
+    Image, 
+    Message,
+    Region,
+    City
+    )
 
 User = get_user_model()
 

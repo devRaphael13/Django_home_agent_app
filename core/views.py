@@ -6,7 +6,6 @@ import cloudinary.api
 import cloudinary.uploader
 
 from concurrent.futures import ThreadPoolExecutor
-from cities_light.models import City, Region
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -24,6 +23,13 @@ from django.views.generic import (
     UpdateView,
     View,
 )
+from .models import (
+    City, 
+    Region,
+    House,
+    Image,
+    Message,
+)
 
 from core.forms import (
     HouseCreationForm,
@@ -35,11 +41,6 @@ from core.forms import (
     MessageForm
 )
 
-from core.models import (
-    House,
-    Image,
-    Message
-    )
 
 config = cloudinary.config(
     cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],

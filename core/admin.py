@@ -12,7 +12,14 @@ from .forms import (
     AdminUserChangeForm,
     AdminUserCreationForm
     )
-from .models import House, Image, User, Message
+from .models import (
+    House, 
+    Image, 
+    User, 
+    Message,
+    Region,
+    City,
+    )
 
 config = cloudinary.config(
     cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],
@@ -119,6 +126,16 @@ class UserModelAdmin(admin.ModelAdmin):
 class MessageModelAdmin(admin.ModelAdmin):
     model = Message
 
+class RegionModelAdmin(admin.ModelAdmin):
+    model = Region
+    
+
+class CityModelAdmin(admin.ModelAdmin):
+    model = City
+    
+    
+admin.site.register(Region, RegionModelAdmin)
+admin.site.register(City, CityModelAdmin)
 admin.site.register(House, HouseModelAdmin)
 admin.site.register(Message, MessageModelAdmin)
 admin.site.register(User, UserModelAdmin)
