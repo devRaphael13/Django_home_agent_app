@@ -3,7 +3,7 @@
 <section class="py-4 px-4 mx-4 my-12 md:mx-12 md:p-8 lg:p-24  lg:mx-48 rounded-md bg-slate-800">
     <h1 class="sm:text-3xl text-2xl title-font mb-8 text-indigo-600 text-xl font-medium leading-tight tracking-tight">
         Sign Up</h1>
-    <form action="." method="POST">
+    <form action="." method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-2">
             <label class="block mb-2 font-medium text-slate-400" for="id_email">Email</label>
@@ -37,7 +37,7 @@
 
         <div class="mb-2">
             <label class="block mb-2 font-medium text-slate-400" for="id_photo">Photo</label>
-            <input type="file" name="photo" id="id_photo">
+            <input type="file" name="photo" id="id_photo" required>
         </div>
         <div class="mb-2">
 
