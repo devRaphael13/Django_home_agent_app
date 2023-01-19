@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.2.2 | MIT License | https://tailwindcss.com
+! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -661,6 +661,11 @@ video {
   margin-right: 3rem;
 }
 
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -1157,10 +1162,6 @@ video {
   padding: 1rem;
 }
 
-.p-1 {
-  padding: 0.25rem;
-}
-
 .p-6 {
   padding: 1.5rem;
 }
@@ -1205,11 +1206,6 @@ video {
   padding-bottom: 6rem;
 }
 
-.px-3 {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -1218,6 +1214,11 @@ video {
 .px-12 {
   padding-left: 3rem;
   padding-right: 3rem;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .py-10 {
@@ -1238,6 +1239,11 @@ video {
 .py-8 {
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .pt-5 {
@@ -1467,16 +1473,6 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
-.placeholder\:text-sm::-moz-placeholder {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.placeholder\:text-sm::placeholder {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
 .placeholder\:italic::-moz-placeholder {
   font-style: italic;
 }
@@ -1493,14 +1489,6 @@ video {
 .placeholder\:text-slate-600::placeholder {
   --tw-text-opacity: 1;
   color: rgb(71 85 105 / var(--tw-text-opacity));
-}
-
-.placeholder\:opacity-70::-moz-placeholder {
-  opacity: 0.7;
-}
-
-.placeholder\:opacity-70::placeholder {
-  opacity: 0.7;
 }
 
 .hover\:bg-slate-700:hover {
@@ -1835,6 +1823,16 @@ video {
     margin-right: 1rem;
   }
 
+  .md\:mx-12 {
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+
+  .md\:my-12 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
   .md\:ml-6 {
     margin-left: 1.5rem;
   }
@@ -1865,10 +1863,6 @@ video {
 
   .md\:h-\[11\.65rem\] {
     height: 11.65rem;
-  }
-
-  .md\:h-screen {
-    height: 100vh;
   }
 
   .md\:w-8\/12 {
@@ -1923,6 +1917,10 @@ video {
     margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
   }
 
+  .md\:p-8 {
+    padding: 2rem;
+  }
+
   .md\:px-12 {
     padding-left: 3rem;
     padding-right: 3rem;
@@ -1936,6 +1934,16 @@ video {
   .md\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .md\:py-8 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   .md\:text-2xl {
@@ -1964,6 +1972,13 @@ video {
 
   .md\:leading-normal {
     line-height: 1.5;
+  }
+
+  @media (min-width: 1024px) {
+    .md\:lg\:py-12 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
   }
 }
 
@@ -1994,6 +2009,11 @@ video {
   .lg\:mx-12 {
     margin-left: 3rem;
     margin-right: 3rem;
+  }
+
+  .lg\:my-12 {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
   }
 
   .lg\:ml-8 {
@@ -2037,6 +2057,10 @@ video {
          column-gap: 2rem;
   }
 
+  .lg\:p-24 {
+    padding: 6rem;
+  }
+
   .lg\:px-12 {
     padding-left: 3rem;
     padding-right: 3rem;
@@ -2057,9 +2081,19 @@ video {
     padding-bottom: 0.5rem;
   }
 
-  .lg\:py-0 {
-    padding-top: 0px;
-    padding-bottom: 0px;
+  .lg\:py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .lg\:px-32 {
+    padding-left: 8rem;
+    padding-right: 8rem;
+  }
+
+  .lg\:px-24 {
+    padding-left: 6rem;
+    padding-right: 6rem;
   }
 
   .lg\:text-5xl {
