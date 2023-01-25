@@ -1,10 +1,19 @@
 import json
 
 import cloudinary
+from django.conf import settings
+
+config = cloudinary.config(
+    cloud_name=settings.CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key=settings.CLOUDINARY_STORAGE['API_KEY'],
+    api_secret=settings.CLOUDINARY_STORAGE['API_SECRET'],
+    api_proxy = "https://proxy.server:3128",
+    secure=True
+)
+
 import cloudinary.api
 import cloudinary.uploader
 from concurrent.futures import ThreadPoolExecutor
-from django.conf import settings
 from django.contrib import admin
 
 from .forms import (
